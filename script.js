@@ -163,3 +163,62 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${minutes}:${remainingSeconds}`;
   }
 });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+    }, 2000); // 2000 milliseconds = 2 seconds
+  });
+
+
+  const centeredHeading = document.querySelector('.centered-heading');
+const text = "Hey Safiya";
+let i = 0;
+let intervalId;
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const centeredHeading = document.querySelector('.centered-heading');
+  const mainHeading = document.getElementById('heading');
+  const text = "Hey Safiya";
+  let i = 0;
+  let intervalId;
+
+  centeredHeading.textContent = ""; // Clear initial text
+
+  intervalId = setInterval(() => {
+    if (i < text.length) {
+      centeredHeading.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(intervalId);
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+        mainHeading.classList.add('interactive'); // Add class for hover after animation
+      }, 1500); // Delay after typing before animation starts
+    }
+  }, 150); // Adjust typing speed (milliseconds per character)
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const heartContainer = document.getElementById('heartContainer');
+  const paymentModal = document.getElementById('paymentModal');
+
+  if (heartContainer && paymentModal) {
+    heartContainer.addEventListener('click', () => {
+      paymentModal.style.display = 'flex'; // Use flex to center content
+      setTimeout(() => {
+        paymentModal.style.opacity = '1'; // Fade in the white screen and text
+      }, 50); // Small delay
+    });
+
+    paymentModal.addEventListener('click', () => {
+      paymentModal.style.opacity = '0';
+      setTimeout(() => {
+        paymentModal.style.display = 'none';
+      }, 500); // Match fade-out duration
+    });
+  }
+});

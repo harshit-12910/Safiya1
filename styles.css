@@ -12,8 +12,74 @@
   --preview-bg: #fff;
 }
 
+/* Initial styles for the centered heading */
+.centered-heading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em; /* Adjust size as needed */
+  opacity: 1;
+  transition: all 1s ease-in-out; /* For the animation */
+  z-index: 10; /* Ensure it's above other content initially */
+  white-space: nowrap; /* Prevent text wrapping */
+}
 
+/* Styles for the normal heading position */
+#heading.main-heading {
+  font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #553c9a, #b393d3);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s ease-in-out 0.5s, color 0.3s ease-in-out; /* Fade in after the centered text moves */
+  position: absolute; /* Or relative, depending on your layout */
+  top: 3rem; /* Adjust top margin */
+  left: 50%; /* Move the left edge to the horizontal center */
+  transform: translateX(-50%); /* Shift the element back by half its width */
+  white-space: nowrap; /* Prevent wrapping if it's causing issues */
+}
 
+#heading.main-heading.interactive:hover { /* Target hover only when 'interactive' class is present */
+  color: rgba(255, 192, 203, 0.5); /* Light pink with some transparency */
+  cursor: default;
+}
+
+body.loaded #heading.main-heading {
+  opacity: 1; /* Fade in */
+  position: static; /* Revert to normal flow for layout */
+  transform: translateX(0); /* Remove the horizontal shift */
+  text-align: center; /* Center the text when in normal flow */
+  left: auto; /* Reset left */
+}
+
+.content-below {
+  opacity: 0; /* Initially hidden */
+  transition: opacity 1s ease-in-out 1s; /* Fade in after the heading */
+  margin-top: 2rem; /* Adjust margin to be below the heading */
+  position: relative; /* Establish a stacking context */
+  z-index: 1; /* Ensure it's below the centered heading initially */
+}
+
+body.loaded .centered-heading {
+  top: 3rem;
+  left: 10vw;
+  transform: translate(0, 0);
+  font-size: inherit; /* Revert to normal heading size */
+  opacity: 0; /* Fade out */
+  z-index: 5; /* Lower z-index as it moves to the top */
+}
+
+body.loaded #heading.main-heading {
+  opacity: 1; /* Fade in */
+  position: static; /* Revert to normal static positioning in the flow */
+}
+
+body.loaded .content-below {
+  opacity: 1; /* Fade in */
+}
 h1{
   font-size: 70px;
   font-weight: 600;
@@ -96,19 +162,19 @@ body {
 }
 
 /* Unique background images for each box */
-.preview:nth-child(2)::before {
+.preview:nth-child(1)::before {
   background-image: url("imgs/LATE\ NIGHT.png");
 }
-.preview:nth-child(3)::before {
+.preview:nth-child(2)::before {
   background-image: url("imgs/Sadhours.png");
 }
-.preview:nth-child(4)::before {
+.preview:nth-child(3)::before {
   background-image: url("imgs/party.png");
 }
-.preview:nth-child(5)::before {
+.preview:nth-child(4)::before {
   background-image: url("imgs/dark.png");
 }
-.preview:nth-child(6)::before {
+.preview:nth-child(5)::before {
   background-image: url("imgs/romantic.png");
 }
 
@@ -172,4 +238,76 @@ body {
   height: 100vh;
   border: none;
   overflow: hidden;
+}
+
+#content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#dynamic-content-container:not(.hidden) #content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#heartContainer {
+  position: fixed; /* To fix it to the bottom left of the viewport */
+  bottom: 20px; /* Adjust this value to move it up or down */
+  left: 20px; /* Adjust this value to move it left or right */
+  width: 30px; /* Decrease the width (adjust as needed) */
+  height: 30px; /* Decrease the height (adjust as needed) */
+  opacity: 0.1;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 100; /* Ensure it's above other content if needed */
+}
+
+#heartContainer:hover {
+  opacity: 0.7;
+  transform: scale(1.2); /* Slightly increase scale on hover */
+}
+
+/* If you are using <img> */
+#heartContainer img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* If you embedded SVG directly */
+#heartContainer svg {
+  width: 100%;
+  height: 100%;
+  fill: black; /* Ensure it's black */
+}
+
+#paymentModal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  color: black;
+  justify-content: center; /* Center content horizontally */
+  align-items: center;    /* Center content vertically */
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  z-index: 101; /* Ensure it's on top */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#paymentText {
+  white-space: pre-line; /* Preserve line breaks */
+  opacity: 0; /* Initially hidden */
+  animation: fadeInText 1s ease-in-out forwards 0.5s; /* Fade in with delay */
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
