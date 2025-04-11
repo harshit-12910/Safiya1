@@ -42,6 +42,21 @@
   white-space: nowrap; /* Prevent wrapping if it's causing issues */
 }
 
+/* Adjust for mobile screens */
+@media (max-width: 600px) {
+  #heading.main-heading {
+    font-size: 40px; /* Reduce font size */
+    white-space: normal; /* Allow wrapping */
+    word-wrap: break-word; /* Break long words */
+  }
+}
+
+@media (max-width: 320px) {
+  #heading.main-heading {
+    font-size: 30px; /* Reduce font size */
+  }
+}
+
 #heading.main-heading.interactive:hover { /* Target hover only when 'interactive' class is present */
   color: rgba(255, 192, 203, 0.5); /* Light pink with some transparency */
   cursor: default;
